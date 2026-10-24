@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile Windows app
+        shell: pwsh
+        run: ./scripts/Build.ps1
+
+      - name: Test file operations
+        shell: pwsh
+        run: ./tests/Integration.ps1 -Executable "$pwd/dist/Folder Organizer.exe" -TestRoot "$env:RUNNER_TEMP/folder-organizer-tests"
+
+      - name: Install packaging compiler
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}/NSIS/makensis.exe")) {
+            choco install nsis --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { throw 'NSIS installation failed.' }
+          }
+
+      - name: Build release downloads
+        shell: pwsh
+        run: ./scripts/Package.ps1
+
+      - name: Test installer and uninstall
+        shell: pwsh
+        run: |
+          $installer = (Get-ChildItem dist/*-setup.exe).FullName
+          ./tests/Installer.Smoke.ps1 -Installer $installer -TestRoot "$env:RUNNER_TEMP/folder-organizer-installer-tests"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: folder-organizer
+          path: |
+            dist/Folder-Organizer_*.exe
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 7
+

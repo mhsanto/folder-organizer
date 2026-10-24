@@ -1,0 +1,7 @@
+/dist/
+/work/
+*.user
+*.log
+AGENTS.md
+.codex/
+
