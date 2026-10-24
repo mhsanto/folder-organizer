@@ -24,7 +24,7 @@ VIAddVersionKey "LegalCopyright" "Copyright 2026 Mahmodul Hasan Santo"
 Section "Folder Organizer" Main
     SetShellVarContext current
     SetOutPath "$INSTDIR"
-    File /oname="Folder Organizer.exe" "${APP_EXE}"
+    File "/oname=Folder Organizer.exe" "${APP_EXE}"
     WriteUninstaller "$INSTDIR\Uninstall.exe"
     CreateDirectory "$SMPROGRAMS\Folder Organizer"
     CreateShortcut "$SMPROGRAMS\Folder Organizer\Organize Desktop.lnk" "$INSTDIR\Folder Organizer.exe"
@@ -52,4 +52,3 @@ Section "Uninstall"
     RMDir "$INSTDIR"
     DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\mhsanto.FolderOrganizer"
 SectionEnd
-

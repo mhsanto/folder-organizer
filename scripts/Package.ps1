@@ -23,4 +23,3 @@ $lines = @($portable, $installer) | ForEach-Object {
 [IO.File]::WriteAllText((Join-Path $OutputDirectory 'SHA256SUMS.txt'),
     ($lines -join "`n") + "`n", [Text.UTF8Encoding]::new($false))
 Write-Output $portable,$installer,(Join-Path $OutputDirectory 'SHA256SUMS.txt')
-

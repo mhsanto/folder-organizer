@@ -49,4 +49,3 @@ jobs:
             dist/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 7
-

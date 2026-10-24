@@ -60,4 +60,3 @@ if ([IO.File]::ReadAllText($source) -ne 'installer smoke test' -or
     throw 'Uninstall changed test documents or history.'
 }
 Write-Output 'PASS: install, four shortcuts, real-file sort/undo, uninstall, preserved files/history.'
-

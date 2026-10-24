@@ -21,4 +21,3 @@ $output = Join-Path $OutputDirectory 'Folder Organizer.exe'
     "$repo\src\AssemblyInfo.cs"
 if ($LASTEXITCODE -ne 0) { throw 'Compilation failed.' }
 Write-Output $output
-
